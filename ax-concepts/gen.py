@@ -280,99 +280,100 @@ boards = [
      fig8, "왼쪽에서 오른쪽으로 흐르고, 아래 굵은 선으로 다시 DB에 돌아온다. 되돌아오는 선이 없으면 DB는 창고일 뿐이다."),
 ]
 
-html = ['''<title>AX 개념도</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Noto+Serif+KR:wght@600;700&display=swap">
-<style>
-/* 레이아웃: 세로로 이어지는 다섯 장의 보드. 한 장에 하나의 개념, 그림이 주인공, 글은 위아래 띠. */
-:root{
-  --bg:#f7f8fa; --paper:#ffffff; --fg:#1b2230; --muted:#5b6474; --line:#d6dbe3;
-  --ax:#1d5fb5; --ax-soft:#e4edf9;
-  --now:#b5541d; --now-soft:#f8ebe2;
-  --ink:#2b3442;
-  --display:"Noto Serif KR","Apple SD Gothic Neo",serif;
-  --body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-}
-@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --bg:#0f141c; --paper:#161d28; --fg:#e8ecf3; --muted:#9aa5b7; --line:#2b3545;
-  --ax:#7eb0ff; --ax-soft:#1b2a44; --now:#f09a5e; --now-soft:#3a2518; --ink:#dce3ee; color-scheme:dark } }
-:root[data-theme="dark"]{
-  --bg:#0f141c; --paper:#161d28; --fg:#e8ecf3; --muted:#9aa5b7; --line:#2b3545;
-  --ax:#7eb0ff; --ax-soft:#1b2a44; --now:#f09a5e; --now-soft:#3a2518; --ink:#dce3ee; color-scheme:dark }
-body{background:var(--bg);color:var(--fg);font-family:var(--body);padding-block:32px;padding-inline:16px;line-height:1.55}
-.wrap{max-width:1040px;margin:0 auto;display:grid;gap:40px}
-header{display:grid;gap:6px}
-header h1{font-family:var(--display);font-size:1.7rem;margin:0;text-wrap:balance}
-header p{margin:0;color:var(--muted);max-width:65ch}
-.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.85rem;color:var(--muted)}
-.legend span::before{content:"";display:inline-block;width:22px;height:3px;vertical-align:middle;margin-right:6px;border-radius:2px}
-.legend .l-now::before{background:var(--now)} .legend .l-ax::before{background:var(--ax)}
-.board{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:24px 24px 20px;display:grid;gap:14px}
-.board .eyebrow{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-.board .num{font-family:var(--display);font-size:1.5rem;color:var(--ax);line-height:1}
-.board h2{font-family:var(--display);font-size:1.35rem;margin:0;text-wrap:balance}
-.board .claim{font-weight:600;color:var(--ink);margin:0}
-.board .why{margin:0;color:var(--muted);max-width:72ch;font-size:.95rem}
-figure{margin:0;display:grid;gap:10px}
-.scroll{overflow-x:auto}
-svg{display:block;width:100%;height:auto;max-width:100%;min-width:640px;font-family:var(--body);color:var(--fg)}
-figcaption{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
-/* svg 공통 */
-svg text{fill:currentColor}
-.h{font-size:16px;font-weight:700}
-.sub{font-size:12px;fill:var(--muted)}
-.b{font-size:14px;font-weight:600}
-.lab{font-size:12.5px;fill:var(--muted)}
-.tiny{font-size:11.5px}
-.note{font-size:12.5px;font-weight:500}
-.big{font-size:30px;font-weight:700;font-family:var(--display)}
-.real{font-size:12.5px;font-weight:600;fill:var(--muted)}
-.e-arrow{font-size:12.5px;font-weight:600}
-.hub-t{font-size:15px;font-weight:700}
-.ax-t{fill:var(--ax)} .now-t{fill:var(--now)}
-.e{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
-.e.ax{stroke:var(--ax)} .e.now{stroke:var(--now)}
-.e.thin{stroke-width:.9;opacity:.6} .e.hair{stroke-width:.45;opacity:.5}
-.e.thick{stroke-width:2.6}
-.e.dash{stroke-dasharray:5 4}
-.e.out{stroke:var(--muted);stroke-width:1.2;stroke-dasharray:2 3}
-.p{fill:var(--paper);stroke:var(--fg);stroke-width:1.6}
-.hub-now{fill:var(--now-soft);stroke:var(--now);stroke-width:2}
-.hub-ax{fill:var(--ax-soft);stroke:var(--ax);stroke-width:2}
-.ai-solo{fill:var(--paper);stroke:var(--muted);stroke-width:1;stroke-dasharray:3 2}
-.divider{stroke:var(--line);stroke-width:1}
-.cust{fill:var(--paper);stroke:var(--fg);stroke-width:1.4}
-.dept{fill:var(--paper);stroke:var(--fg);stroke-width:1.4}
-.ans{fill:var(--paper);stroke-width:1.6}
-.now-box{stroke:var(--now);fill:var(--now-soft)} .ax-box{stroke:var(--ax);fill:var(--ax-soft)}
-.db{fill:var(--ax-soft);stroke:var(--ax);stroke-width:2}
-.step{fill:var(--ax-soft);stroke:var(--ax);stroke-width:2}
-.case{fill:var(--now-soft);stroke:var(--now);stroke-width:1.4}
-.chip{stroke-width:1.4}
-.src{fill:var(--paper);stroke:var(--fg);stroke-width:1.2}
-.db-top{fill:var(--ax-soft);stroke:var(--ax);stroke-width:2}
-.db-body{fill:var(--ax-soft);stroke:var(--ax);stroke-width:2}
-.judge{fill:var(--paper);stroke:var(--fg);stroke-width:1.4}
-.act{fill:var(--paper);stroke:var(--fg);stroke-width:1.4;stroke-dasharray:6 3}
-@media (max-width:640px){ .board{padding:16px} header h1{font-size:1.4rem} }
-</style>
-<div class="wrap">
-<header>
-<h1>AX 개념도 ④~⑧</h1>
-<p>글로 쓴 ①~③을 그림으로 옮긴 다섯 장. 한 장에 개념 하나만 담았다.</p>
-<div class="legend"><span class="l-now">지금 · 사람을 거친다</span><span class="l-ax">목표 · 회사의 두뇌를 거친다</span></div>
-</header>
-''']
-for num, title, claim, why, fn, cap in boards:
-    W, H, body = fn()
-    html.append(f'''<section class="board" id="b{num}">
-<div class="eyebrow"><span class="num">{num}</span><h2>{title}</h2></div>
-<p class="claim">{claim}</p>
-<p class="why">{why}</p>
-<figure><div class="scroll"><svg viewBox="0 0 {W} {H}" role="img" aria-label="{claim}">{DEFS}
-{body}
-</svg></div><figcaption>{cap}</figcaption></figure>
-</section>
-''')
-html.append('</div>')
-open('ax-concepts.html','w').write("\n".join(html))
-print("ok")
+if __name__ == '__main__':
+    html = ['''<title>AX 개념도</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Noto+Serif+KR:wght@600;700&display=swap">
+    <style>
+    /* 레이아웃: 세로로 이어지는 다섯 장의 보드. 한 장에 하나의 개념, 그림이 주인공, 글은 위아래 띠. */
+    :root{
+      --bg:#f7f8fa; --paper:#ffffff; --fg:#1b2230; --muted:#5b6474; --line:#d6dbe3;
+      --ax:#1d5fb5; --ax-soft:#e4edf9;
+      --now:#b5541d; --now-soft:#f8ebe2;
+      --ink:#2b3442;
+      --display:"Noto Serif KR","Apple SD Gothic Neo",serif;
+      --body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    }
+    @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+      --bg:#0f141c; --paper:#161d28; --fg:#e8ecf3; --muted:#9aa5b7; --line:#2b3545;
+      --ax:#7eb0ff; --ax-soft:#1b2a44; --now:#f09a5e; --now-soft:#3a2518; --ink:#dce3ee; color-scheme:dark } }
+    :root[data-theme="dark"]{
+      --bg:#0f141c; --paper:#161d28; --fg:#e8ecf3; --muted:#9aa5b7; --line:#2b3545;
+      --ax:#7eb0ff; --ax-soft:#1b2a44; --now:#f09a5e; --now-soft:#3a2518; --ink:#dce3ee; color-scheme:dark }
+    body{background:var(--bg);color:var(--fg);font-family:var(--body);padding-block:32px;padding-inline:16px;line-height:1.55}
+    .wrap{max-width:1040px;margin:0 auto;display:grid;gap:40px}
+    header{display:grid;gap:6px}
+    header h1{font-family:var(--display);font-size:1.7rem;margin:0;text-wrap:balance}
+    header p{margin:0;color:var(--muted);max-width:65ch}
+    .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.85rem;color:var(--muted)}
+    .legend span::before{content:"";display:inline-block;width:22px;height:3px;vertical-align:middle;margin-right:6px;border-radius:2px}
+    .legend .l-now::before{background:var(--now)} .legend .l-ax::before{background:var(--ax)}
+    .board{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:24px 24px 20px;display:grid;gap:14px}
+    .board .eyebrow{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+    .board .num{font-family:var(--display);font-size:1.5rem;color:var(--ax);line-height:1}
+    .board h2{font-family:var(--display);font-size:1.35rem;margin:0;text-wrap:balance}
+    .board .claim{font-weight:600;color:var(--ink);margin:0}
+    .board .why{margin:0;color:var(--muted);max-width:72ch;font-size:.95rem}
+    figure{margin:0;display:grid;gap:10px}
+    .scroll{overflow-x:auto}
+    svg{display:block;width:100%;height:auto;max-width:100%;min-width:640px;font-family:var(--body);color:var(--fg)}
+    figcaption{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+    /* svg 공통 */
+    svg text{fill:currentColor}
+    .h{font-size:16px;font-weight:700}
+    .sub{font-size:12px;fill:var(--muted)}
+    .b{font-size:14px;font-weight:600}
+    .lab{font-size:12.5px;fill:var(--muted)}
+    .tiny{font-size:11.5px}
+    .note{font-size:12.5px;font-weight:500}
+    .big{font-size:30px;font-weight:700;font-family:var(--display)}
+    .real{font-size:12.5px;font-weight:600;fill:var(--muted)}
+    .e-arrow{font-size:12.5px;font-weight:600}
+    .hub-t{font-size:15px;font-weight:700}
+    .ax-t{fill:var(--ax)} .now-t{fill:var(--now)}
+    .e{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
+    .e.ax{stroke:var(--ax)} .e.now{stroke:var(--now)}
+    .e.thin{stroke-width:.9;opacity:.6} .e.hair{stroke-width:.45;opacity:.5}
+    .e.thick{stroke-width:2.6}
+    .e.dash{stroke-dasharray:5 4}
+    .e.out{stroke:var(--muted);stroke-width:1.2;stroke-dasharray:2 3}
+    .p{fill:var(--paper);stroke:var(--fg);stroke-width:1.6}
+    .hub-now{fill:var(--now-soft);stroke:var(--now);stroke-width:2}
+    .hub-ax{fill:var(--ax-soft);stroke:var(--ax);stroke-width:2}
+    .ai-solo{fill:var(--paper);stroke:var(--muted);stroke-width:1;stroke-dasharray:3 2}
+    .divider{stroke:var(--line);stroke-width:1}
+    .cust{fill:var(--paper);stroke:var(--fg);stroke-width:1.4}
+    .dept{fill:var(--paper);stroke:var(--fg);stroke-width:1.4}
+    .ans{fill:var(--paper);stroke-width:1.6}
+    .now-box{stroke:var(--now);fill:var(--now-soft)} .ax-box{stroke:var(--ax);fill:var(--ax-soft)}
+    .db{fill:var(--ax-soft);stroke:var(--ax);stroke-width:2}
+    .step{fill:var(--ax-soft);stroke:var(--ax);stroke-width:2}
+    .case{fill:var(--now-soft);stroke:var(--now);stroke-width:1.4}
+    .chip{stroke-width:1.4}
+    .src{fill:var(--paper);stroke:var(--fg);stroke-width:1.2}
+    .db-top{fill:var(--ax-soft);stroke:var(--ax);stroke-width:2}
+    .db-body{fill:var(--ax-soft);stroke:var(--ax);stroke-width:2}
+    .judge{fill:var(--paper);stroke:var(--fg);stroke-width:1.4}
+    .act{fill:var(--paper);stroke:var(--fg);stroke-width:1.4;stroke-dasharray:6 3}
+    @media (max-width:640px){ .board{padding:16px} header h1{font-size:1.4rem} }
+    </style>
+    <div class="wrap">
+    <header>
+    <h1>AX 개념도 ④~⑧</h1>
+    <p>글로 쓴 ①~③을 그림으로 옮긴 다섯 장. 한 장에 개념 하나만 담았다.</p>
+    <div class="legend"><span class="l-now">지금 · 사람을 거친다</span><span class="l-ax">목표 · 회사의 두뇌를 거친다</span></div>
+    </header>
+    ''']
+    for num, title, claim, why, fn, cap in boards:
+        W, H, body = fn()
+        html.append(f'''<section class="board" id="b{num}">
+    <div class="eyebrow"><span class="num">{num}</span><h2>{title}</h2></div>
+    <p class="claim">{claim}</p>
+    <p class="why">{why}</p>
+    <figure><div class="scroll"><svg viewBox="0 0 {W} {H}" role="img" aria-label="{claim}">{DEFS}
+    {body}
+    </svg></div><figcaption>{cap}</figcaption></figure>
+    </section>
+    ''')
+    html.append('</div>')
+    open('/tmp/claude-0/-home-user-H2J-Personel/2689a751-0354-5d37-885b-6d61cf7a01b7/scratchpad/ax-concepts.html','w').write("\n".join(html))
+    print("ok")
